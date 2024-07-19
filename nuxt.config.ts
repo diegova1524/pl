@@ -5,6 +5,6 @@ export default defineNuxtConfig({
   extends: ["@nuxt/ui-pro"],
   modules: ["@nuxt/ui", "@nuxtjs/supabase", "@nuxthub/core"],
   ui: {
-    icons: ["simple-icons"],
+    icons: ["simple-icons", "heroicons"],
   },
 });

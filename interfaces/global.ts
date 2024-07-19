@@ -16,12 +16,11 @@ interface SubmenuItem {
 
 export type Cliente = {
   id?: number;
-  nombres_razonsocial?: string;
+  nombres?: string;
+  apellidos?: string;
   tipo_documento?: string;
   nro_documento?: string;
-  telefono?: string;
-  distrito?: string;
-  direccion?: string;
+  celular?: string;
 };
 
 export type Categoria = {
@@ -30,14 +29,15 @@ export type Categoria = {
 };
 
 export type Producto = {
-  id?: number;
+  id: number;
   id_categoria?: number;
   categoria?: Categoria;
   nombre?: string;
   descripcion?: string;
   imagen?: string;
   precio_venta?: string;
-  stock?: string;
+  unidades_disponibles?: string;
+  imagenes: string[];
 };
 
 export type Pagination = {

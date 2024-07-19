@@ -14,6 +14,13 @@
         color="gray"
         variant="ghost"
       />
+      <UButton
+        @click="handleLogout"
+        target="_blank"
+        icon="i-heroicons-arrow-right-start-on-rectangle"
+        color="gray"
+        variant="ghost"
+      />
     </template>
 
     <template #panel> </template>
@@ -25,6 +32,11 @@
 </template>
 
 <script setup lang="ts">
+import type { Database } from "@/database.types";
+
+const client = useSupabaseClient<Database>();
+const router = useRouter();
+
 const links = [
   {
     label: "Módulos",
@@ -32,6 +44,15 @@ const links = [
     to: "/",
   },
 ];
+
+const handleLogout = async () => {
+  const { error } = await client.auth.signOut();
+  if (!error) {
+    router.push("/login");
+  } else {
+    console.error("Error logging out:", error);
+  }
+};
 </script>
 
 <style scoped></style>
