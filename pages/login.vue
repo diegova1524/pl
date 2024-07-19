@@ -1,3 +1,70 @@
+<script setup lang="ts">
+import type { SupabaseClient } from '@supabase/supabase-js'
+import type { FormError } from '#ui/types'
+
+const supabase: SupabaseClient = useSupabaseClient()
+
+const fields = [
+  {
+    name: 'email',
+    type: 'text',
+    label: 'Email',
+    placeholder: 'Enter your email',
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    placeholder: 'Enter your password',
+  },
+  {
+    name: 'remember',
+    label: 'Remember me',
+    type: 'checkbox',
+  },
+]
+const hasError = ref(false) // Variable de estado para el error
+
+function validate(state: any) {
+  const errors: FormError[] = []
+  if (!state.email)
+    errors.push({ path: 'email', message: 'Email is required' })
+  if (!state.password)
+    errors.push({ path: 'password', message: 'Password is required' })
+  return errors
+}
+
+const providers = [
+  {
+    label: 'Continue with GitHub',
+    icon: 'i-simple-icons-github',
+    color: 'white' as const,
+    click: () => {
+      console.log('Redirect to GitHub')
+    },
+  },
+]
+
+async function onSubmit(data: any) {
+  hasError.value = false
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email: data.email,
+    password: data.password,
+  })
+  if (!error) {
+    navigateTo('/', { replace: true })
+  }
+  else {
+    hasError.value = true
+  }
+}
+
+definePageMeta({
+  layout: 'login',
+})
+</script>
+
 <template>
   <UCard class="max-w-sm w-full">
     <UAuthForm
@@ -12,13 +79,15 @@
     >
       <template #description>
         Don't have an account?
-        <NuxtLink to="/" class="text-primary font-medium">Sign up</NuxtLink>.
+        <NuxtLink to="/" class="text-primary font-medium">
+          Sign up
+        </NuxtLink>.
       </template>
 
       <template #password-hint>
-        <NuxtLink to="/" class="text-primary font-medium"
-          >Forgot password?</NuxtLink
-        >
+        <NuxtLink to="/" class="text-primary font-medium">
+          Forgot password?
+        </NuxtLink>
       </template>
       <template #validation>
         <UAlert
@@ -30,76 +99,10 @@
       </template>
       <template #footer>
         By signing in, you agree to our
-        <NuxtLink to="/" class="text-primary font-medium"
-          >Terms of Service</NuxtLink
-        >.
+        <NuxtLink to="/" class="text-primary font-medium">
+          Terms of Service
+        </NuxtLink>.
       </template>
     </UAuthForm>
   </UCard>
 </template>
-
-<script setup lang="ts">
-import { SupabaseClient } from "@supabase/supabase-js";
-
-const supabase: SupabaseClient = useSupabaseClient();
-import type { FormError } from "#ui/types";
-
-const fields = [
-  {
-    name: "email",
-    type: "text",
-    label: "Email",
-    placeholder: "Enter your email",
-  },
-  {
-    name: "password",
-    label: "Password",
-    type: "password",
-    placeholder: "Enter your password",
-  },
-  {
-    name: "remember",
-    label: "Remember me",
-    type: "checkbox",
-  },
-];
-const hasError = ref(false); // Variable de estado para el error
-
-const validate = (state: any) => {
-  const errors: FormError[] = [];
-  if (!state.email)
-    errors.push({ path: "email", message: "Email is required" });
-  if (!state.password)
-    errors.push({ path: "password", message: "Password is required" });
-  return errors;
-};
-
-const providers = [
-  {
-    label: "Continue with GitHub",
-    icon: "i-simple-icons-github",
-    color: "white" as const,
-    click: () => {
-      console.log("Redirect to GitHub");
-    },
-  },
-];
-
-async function onSubmit(data: any) {
-  hasError.value = false;
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email: data.email,
-    password: data.password,
-  });
-  if (!error) {
-    navigateTo("/", { replace: true });
-  } else {
-    hasError.value = true;
-  }
-}
-
-definePageMeta({
-  layout: "login",
-});
-</script>

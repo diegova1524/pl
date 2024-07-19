@@ -1,51 +1,51 @@
-export type Item = {
-  icon: string;
-  title: string | any;
-  to: string;
-  name: string;
+export interface Item {
+  icon: string
+  title: string | any
+  to: string
+  name: string
 
-  submenu?: SubmenuItem[];
-};
-
-interface SubmenuItem {
-  icon: string;
-  title: string;
-  to: string;
-  name: string;
+  submenu?: SubmenuItem[]
 }
 
-export type Cliente = {
-  id?: number;
-  nombres?: string;
-  apellidos?: string;
-  tipo_documento?: string;
-  nro_documento?: string;
-  celular?: string;
-};
+interface SubmenuItem {
+  icon: string
+  title: string
+  to: string
+  name: string
+}
 
-export type Categoria = {
-  id?: number;
-  nombre?: string;
-};
+export interface Cliente {
+  id: number | null
+  nombres: string
+  apellidos: string | null
+  tipo_documento: string | null
+  nro_documento: string | null
+  celular: string | null
+}
 
-export type Producto = {
-  id: number;
-  id_categoria?: number;
-  categoria?: Categoria;
-  nombre?: string;
-  descripcion?: string;
-  imagen?: string;
-  precio_venta?: string;
-  unidades_disponibles?: string;
-  imagenes: string[];
-};
+export interface Categoria {
+  id?: number
+  nombre?: string
+}
 
-export type Pagination = {
-  descending: boolean;
-  page: number;
-  rowsNumber: number;
-  rowsPerPage: number;
-  skip: number;
-  sortBy?: any;
-  total: number;
-};
+export interface Producto {
+  id: number
+  id_categoria?: number
+  categoria?: Categoria
+  nombre?: string
+  descripcion?: string
+  imagen?: string
+  precio_venta?: string
+  unidades_disponibles?: string
+  imagenes: string[]
+}
+
+export interface Pagination {
+  descending: boolean
+  page: number
+  rowsNumber: number
+  rowsPerPage: number
+  skip: number
+  sortBy?: any
+  total: number
+}

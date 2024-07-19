@@ -1,3 +1,38 @@
+<script setup lang="ts">
+// Modulos de la aplicación
+
+const modules = [
+  {
+    title: 'Compras',
+    description:
+      'Este módulo permite gestionar las compras. Registrar proveedores, productos y realizar compras.',
+    to: '/compras',
+    icon: 'i-simple-icons-shopee',
+  },
+  {
+    title: 'Inventario',
+    description:
+      'Gestiona el inventario de productos. Entradas, salidas y ajustes.',
+    to: '/inventario',
+    icon: 'i-simple-icons-tailwindcss',
+  },
+  {
+    title: 'Ventas',
+    description:
+      'Gestiona las ventas de productos. Realiza cotizaciones, ventas y facturación.',
+    to: '/ventas',
+    icon: 'i-simple-icons-shopify',
+  },
+  {
+    title: 'Gestión de Usuario',
+    description:
+      'Gestiona los usuarios del sistema. Permite registrar, editar y eliminar usuarios. También asignar roles y permisos.',
+    to: '/usuarios',
+    icon: 'i-simple-icons-vue-dot-js',
+  },
+]
+</script>
+
 <template>
   <UPageGrid class="mt-5">
     <UPageCard
@@ -13,38 +48,3 @@
     </UPageCard>
   </UPageGrid>
 </template>
-
-<script setup lang="ts">
-// Modulos de la aplicación
-
-const modules = [
-  {
-    title: "Compras",
-    description:
-      "Este módulo permite gestionar las compras. Registrar proveedores, productos y realizar compras.",
-    to: "/compras",
-    icon: "i-simple-icons-shopee",
-  },
-  {
-    title: "Inventario",
-    description:
-      "Gestiona el inventario de productos. Entradas, salidas y ajustes.",
-    to: "/inventario",
-    icon: "i-simple-icons-tailwindcss",
-  },
-  {
-    title: "Ventas",
-    description:
-      "Gestiona las ventas de productos. Realiza cotizaciones, ventas y facturación.",
-    to: "/ventas",
-    icon: "i-simple-icons-shopify",
-  },
-  {
-    title: "Gestión de Usuario",
-    description:
-      "Gestiona los usuarios del sistema. Permite registrar, editar y eliminar usuarios. También asignar roles y permisos.",
-    to: "/usuarios",
-    icon: "i-simple-icons-vue-dot-js",
-  },
-];
-</script>
