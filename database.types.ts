@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type Database = {
+export interface Database {
   public: {
     Tables: {
       categorias: {
@@ -29,7 +29,6 @@ export type Database = {
           apellidos: string | null
           celular: string | null
           id: number
-          id_direccion: number
           nombres: string
           nro_documento: string | null
           tipo_documento: string | null
@@ -37,8 +36,7 @@ export type Database = {
         Insert: {
           apellidos?: string | null
           celular?: string | null
-          id: number
-          id_direccion: number
+          id?: number
           nombres: string
           nro_documento?: string | null
           tipo_documento?: string | null
@@ -47,20 +45,11 @@ export type Database = {
           apellidos?: string | null
           celular?: string | null
           id?: number
-          id_direccion?: number
           nombres?: string
           nro_documento?: string | null
           tipo_documento?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "clientes_id_direccion_fkey"
-            columns: ["id_direccion"]
-            isOneToOne: false
-            referencedRelation: "direcciones"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       compras: {
         Row: {
@@ -92,18 +81,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "compras_id_empleado_fkey"
-            columns: ["id_empleado"]
+            foreignKeyName: 'compras_id_empleado_fkey'
+            columns: ['id_empleado']
             isOneToOne: false
-            referencedRelation: "empleados"
-            referencedColumns: ["id"]
+            referencedRelation: 'empleados'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "compras_id_proveedor_fkey"
-            columns: ["id_proveedor"]
+            foreignKeyName: 'compras_id_proveedor_fkey'
+            columns: ['id_proveedor']
             isOneToOne: false
-            referencedRelation: "proveedores"
-            referencedColumns: ["id"]
+            referencedRelation: 'proveedores'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -143,32 +132,32 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "detalle_compras_id_compra_fkey"
-            columns: ["id_compra"]
+            foreignKeyName: 'detalle_compras_id_compra_fkey'
+            columns: ['id_compra']
             isOneToOne: false
-            referencedRelation: "compras"
-            referencedColumns: ["id"]
+            referencedRelation: 'compras'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "detalle_compras_id_empleado_fkey"
-            columns: ["id_empleado"]
+            foreignKeyName: 'detalle_compras_id_empleado_fkey'
+            columns: ['id_empleado']
             isOneToOne: false
-            referencedRelation: "empleados"
-            referencedColumns: ["id"]
+            referencedRelation: 'empleados'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "detalle_compras_id_producto_fkey"
-            columns: ["id_producto"]
+            foreignKeyName: 'detalle_compras_id_producto_fkey'
+            columns: ['id_producto']
             isOneToOne: false
-            referencedRelation: "productos"
-            referencedColumns: ["id"]
+            referencedRelation: 'productos'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "detalle_compras_id_proveedor_fkey"
-            columns: ["id_proveedor"]
+            foreignKeyName: 'detalle_compras_id_proveedor_fkey'
+            columns: ['id_proveedor']
             isOneToOne: false
-            referencedRelation: "proveedores"
-            referencedColumns: ["id"]
+            referencedRelation: 'proveedores'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -205,18 +194,18 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "detalle_ventas_id_producto_fkey"
-            columns: ["id_producto"]
+            foreignKeyName: 'detalle_ventas_id_producto_fkey'
+            columns: ['id_producto']
             isOneToOne: false
-            referencedRelation: "productos"
-            referencedColumns: ["id"]
+            referencedRelation: 'productos'
+            referencedColumns: ['id']
           },
           {
-            foreignKeyName: "detalle_ventas_id_venta_fkey"
-            columns: ["id_venta"]
+            foreignKeyName: 'detalle_ventas_id_venta_fkey'
+            columns: ['id_venta']
             isOneToOne: false
-            referencedRelation: "ventas"
-            referencedColumns: ["id"]
+            referencedRelation: 'ventas'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -228,6 +217,7 @@ export type Database = {
           direccion: string | null
           distrito: string | null
           id: number
+          id_cliente: number | null
           nombre: string | null
           provincia: string | null
           referencia: string | null
@@ -239,6 +229,7 @@ export type Database = {
           direccion?: string | null
           distrito?: string | null
           id?: number
+          id_cliente?: number | null
           nombre?: string | null
           provincia?: string | null
           referencia?: string | null
@@ -250,11 +241,20 @@ export type Database = {
           direccion?: string | null
           distrito?: string | null
           id?: number
+          id_cliente?: number | null
           nombre?: string | null
           provincia?: string | null
           referencia?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: 'direcciones_id_cliente_fkey'
+            columns: ['id_cliente']
+            isOneToOne: false
+            referencedRelation: 'clientes'
+            referencedColumns: ['id']
+          },
+        ]
       }
       empleados: {
         Row: {
@@ -286,11 +286,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "empleados_id_usuario_fkey"
-            columns: ["id_usuario"]
+            foreignKeyName: 'empleados_id_usuario_fkey'
+            columns: ['id_usuario']
             isOneToOne: false
-            referencedRelation: "usuarios"
-            referencedColumns: ["id"]
+            referencedRelation: 'usuarios'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -339,11 +339,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "productos_id_categoria_fkey"
-            columns: ["id_categoria"]
+            foreignKeyName: 'productos_id_categoria_fkey'
+            columns: ['id_categoria']
             isOneToOne: false
-            referencedRelation: "categorias"
-            referencedColumns: ["id"]
+            referencedRelation: 'categorias'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -449,18 +449,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "ventas_id_cliente_fkey"
-            columns: ["id_cliente"]
+            foreignKeyName: 'ventas_id_empleado_fkey'
+            columns: ['id_empleado']
             isOneToOne: false
-            referencedRelation: "clientes"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "ventas_id_empleado_fkey"
-            columns: ["id_empleado"]
-            isOneToOne: false
-            referencedRelation: "empleados"
-            referencedColumns: ["id"]
+            referencedRelation: 'empleados'
+            referencedColumns: ['id']
           },
         ]
       }
@@ -544,84 +537,84 @@ export type Database = {
   }
 }
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, 'public'>]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
-    | { schema: keyof Database },
+  | keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+  | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-        Database[PublicTableNameOrOptions["schema"]]["Views"])
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+    Database[PublicTableNameOrOptions['schema']]['Views'])
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
-      Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+  Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
       Row: infer R
     }
-    ? R
-    : never
-  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
-        PublicSchema["Views"])
-    ? (PublicSchema["Tables"] &
-        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
-      }
       ? R
       : never
+  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] &
+  PublicSchema['Views'])
+    ? (PublicSchema['Tables'] &
+    PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+        ? R
+        : never
     : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
+  | keyof PublicSchema['Tables']
+  | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
-    }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+    Insert: infer I
+  }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
-      }
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+      Insert: infer I
+    }
       ? I
       : never
     : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof PublicSchema["Tables"]
-    | { schema: keyof Database },
+  | keyof PublicSchema['Tables']
+  | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
-    }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+    Update: infer U
+  }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
-    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
-      }
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+      Update: infer U
+    }
       ? U
       : never
     : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof PublicSchema["Enums"]
-    | { schema: keyof Database },
+  | keyof PublicSchema['Enums']
+  | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
-    ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
     : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
-    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
+    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
     : never

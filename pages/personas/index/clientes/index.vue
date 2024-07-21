@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import type { Database } from '@/database.types'
 
-import type { Cliente } from '@/interfaces/global'
+import type { Cliente, Pagination } from '@/interfaces/global'
 
 const client = useSupabaseClient<Database>()
 
-const tipoDocumentoOptions = ['DNI', 'RUC']
-
-const pagination = ref<any>({
+const pagination = ref<Pagination>({
   descending: false,
   page: 1,
   rowsNumber: 0,
@@ -57,46 +55,40 @@ const { data: clientesData } = useAsyncData<Cliente[]>(
   },
 )
 
-function name() {
-  //
-
-  // id
-
-  navigateTo(`/usuarios/clientes/id`)
-}
+const modules = [{
+  title: 'VueUse',
+  description: 'Collection of essential Vue Composition Utilities for Vue 2 and 3.',
+  to: 'https://github.com/vueuse/vueuse',
+  icon: 'i-simple-icons-nuxtdotjs',
+}, {
+  title: 'ESLint',
+  description: 'ESLint module for Nuxt.',
+  to: 'https://github.com/nuxt-community/eslint-module',
+  icon: 'i-simple-icons-eslint',
+}, {
+  title: 'Tailwind CSS',
+  description: 'Add Tailwind CSS to your Nuxt application in seconds with PurgeCSS included for minimal CSS.',
+  to: 'https://github.com/nuxt-modules/tailwindcss',
+  icon: 'i-simple-icons-tailwindcss',
+}]
 </script>
 
 <template>
-  <UButton
-    icon="i-heroicons-pencil-square"
-    size="md"
-    color="violet"
-    variant="solid"
-    label="Nuevo"
-    class="mt-5"
-    :trailing="false"
-    to="/usuarios/clientes/nuevoCliente"
-  />
-  Clientes
-  <ULandingGrid class="mt-5">
-    <ULandingCard
+  <UPageGrid class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 mt-5">
+    <UPageCard
       v-for="c, index in clientesData"
       :key="index"
-      class="col-span-6 row-span-2"
       :title="`${c.nombres} ${c.apellidos}`"
-      :description="`Documento: ${c.tipo_documento} - ${c.nro_documento}`"
       icon="i-heroicons-photo"
-      color="purple"
-      orientation="horizontal"
+      v-bind="c"
+      :to="`/personas/clientes/${c.id}`"
     >
-      <img
-        src="https://picsum.photos/640/360?grayscale"
-        class="w-full rounded-md"
-      >
-    </ULandingCard>
-  </ULandingGrid>
-
-  <pre>{{ clientesData }}</pre>
+      <template #description>
+        <span class="line-clamp-2">{{ c.tipo_documento }}</span>
+        <span class="line-clamp-2">{{ c.nro_documento }}</span>
+      </template>
+    </UPageCard>
+  </UPageGrid>
 </template>
 
 <style scoped></style>

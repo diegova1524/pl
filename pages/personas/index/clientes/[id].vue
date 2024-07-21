@@ -6,6 +6,9 @@ import type { FormError, FormSubmitEvent } from '#ui/types'
 
 const client = useSupabaseClient<Database>()
 const route = useRoute()
+const router = useRouter()
+
+const reniec = useReniec()
 
 const tipoDocumentoOptions = ['DNI', 'RUC']
 
@@ -59,19 +62,62 @@ async function updateClient() {
     console.error('Error updating client:', error)
   }
 }
+
+async function deleteClient() {
+  const { error } = await client.from('clientes').delete().eq('id', id)
+
+  if (error) {
+    console.error('Error al eliminar cliente', error)
+  }
+  else {
+    navigateTo('/personas/clientes')
+  }
+}
+
+// RENIEC
+async function getInfo() {
+  const d = await reniec.getInfo(itemData.value.nro_documento || '', itemData.value.tipo_documento?.toLowerCase())
+  if (d) {
+    itemData.value.nombres = d.nombres
+    itemData.value.apellidos = `${d.apellidoPaterno} ${d.apellidoMaterno} `
+  }
+
+  updateClient()
+}
+
+async function back() {
+  if (itemData.value.nombres === 'Nuevo') {
+    await deleteClient()
+  }
+  router.back()
+}
 </script>
 
 <template>
-  <UCard>
+  <UCard class="mt-4">
     <template #header>
-      Cliente
-      <UButton
-        target="_blank"
-        icon="i-heroicons-arrow-right-start-on-rectangle"
-        color="gray"
-        variant="ghost"
-        to="usuarios/clientes"
-      />
+      <div class="flex justify-between items-center w-full">
+        <div class="flex gap-5">
+          <UButton
+            :padded="false"
+            color="gray"
+            variant="link"
+            icon="i-heroicons-chevron-left"
+            @click="back()"
+          />
+          <h1>
+            Informacion
+          </h1>
+        </div>
+
+        <UButton
+          target="_blank"
+          icon="i-heroicons-trash"
+          color="gray"
+          variant="ghost"
+          @click="deleteClient"
+        />
+      </div>
     </template>
 
     <UForm
@@ -79,6 +125,33 @@ async function updateClient() {
       :state="itemData"
       class="space-y-4"
     >
+      <div class="flex gap-10">
+        <div class="w-1/2 mt-3">
+          <USelect
+            v-model="itemData.tipo_documento"
+            :padded="false"
+            placeholder="Tipo de Documento"
+            :options="tipoDocumentoOptions"
+            variant="none"
+            class="w-full"
+            @blur="updateClient"
+          />
+        </div>
+
+        <UFormGroup label="Nro de Documento" name="nro_documento" class="w-1/2">
+          <UInput
+            v-model="itemData.nro_documento"
+            placeholder="Buscar en RENIEC"
+            :padded="false"
+            variant="none"
+            class="w-full"
+            @blur="() => {
+              getInfo()
+              updateClient()
+            }"
+          />
+        </UFormGroup>
+      </div>
       <div class="flex gap-10">
         <UFormGroup label="Nombres" name="nombres" class="w-1/2">
           <UInput
@@ -102,30 +175,6 @@ async function updateClient() {
         </UFormGroup>
       </div>
 
-      <div class="flex gap-10">
-        <div class="w-1/2 mt-6">
-          <USelect
-            v-model="itemData.tipo_documento"
-            :padded="false"
-            placeholder="Tipo de Documento"
-            :options="tipoDocumentoOptions"
-            variant="none"
-            class="w-full"
-            @blur="updateClient"
-          />
-        </div>
-
-        <UFormGroup label="Nro de Documento" name="nro_documento" class="w-1/2">
-          <UInput
-            v-model="itemData.nro_documento"
-            placeholder="Nro de Documento"
-            :padded="false"
-            variant="none"
-            class="w-full"
-            @blur="updateClient"
-          />
-        </UFormGroup>
-      </div>
       <UFormGroup label="Celular" name="celular" class="w-1/2">
         <UInput
           v-model="itemData.celular"
@@ -136,10 +185,6 @@ async function updateClient() {
           @blur="updateClient"
         />
       </UFormGroup>
-
-      <UButton type="submit">
-        Submit
-      </UButton>
     </UForm>
     <template #footer />
   </UCard>

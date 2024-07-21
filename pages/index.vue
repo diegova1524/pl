@@ -27,8 +27,8 @@ const modules = [
     title: 'Gestión de Usuario',
     description:
       'Gestiona los usuarios del sistema. Permite registrar, editar y eliminar usuarios. También asignar roles y permisos.',
-    to: '/usuarios',
-    icon: 'i-simple-icons-vue-dot-js',
+    to: '/personas',
+    icon: 'i-heroicons-users',
   },
 ]
 </script>
