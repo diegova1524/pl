@@ -147,7 +147,6 @@ async function back() {
             class="w-full"
             @blur="() => {
               getInfo()
-              updateClient()
             }"
           />
         </UFormGroup>
@@ -186,9 +185,65 @@ async function back() {
         />
       </UFormGroup>
     </UForm>
-    <template #footer />
-  </UCard>
-  <pre>{{ clientesData }}</pre>
+    <template #footer>
+      <h1>Direcciones</h1>
+      <UDivider class="my-5 " />
+
+      <UForm
+        :validate="validate"
+        :state="itemData"
+        class="space-y-4"
+      >
+        <div class="flex gap-10">
+          <div class="w-1/2 mt-3">
+            <USelect
+              v-model="itemData.tipo_documento"
+              :padded="false"
+              placeholder="Departamento"
+              :options="tipoDocumentoOptions"
+              variant="none"
+              class="w-full"
+              @blur="updateClient"
+            />
+          </div>
+          <div class="w-1/2 mt-3">
+            <USelect
+              v-model="itemData.tipo_documento"
+              :padded="false"
+              placeholder="Provincia"
+              :options="tipoDocumentoOptions"
+              variant="none"
+              class="w-full"
+              @blur="updateClient"
+            />
+          </div>
+        </div>
+        <div class="flex gap-10">
+          <div class="w-1/2 mt-3">
+            <USelect
+              v-model="itemData.tipo_documento"
+              :padded="false"
+              placeholder="Distrito"
+              :options="tipoDocumentoOptions"
+              variant="none"
+              class="w-full"
+              @blur="updateClient"
+            />
+          </div>
+          <UFormGroup label="Celular" name="celular" class="w-1/2">
+            <UInput
+              v-model="itemData.celular"
+              :padded="false"
+              variant="none"
+              class="w-full"
+              placeholder="90.."
+              @blur="updateClient"
+            />
+          </UFormGroup>
+        </div>
+      </UForm>
+    </template>
+  </ucard>
 </template>
 
 <style scoped></style>
