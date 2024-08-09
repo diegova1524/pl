@@ -49,3 +49,26 @@ export interface Pagination {
   sortBy?: any
   total: number
 }
+
+export interface Compra {
+  id: number;
+  id_proveedor: number; 
+  id_empleado: number; 
+  referencia: string;
+  fecha_compra: string;
+  total: number;
+  estado: string;
+}
+  
+export interface DetalleCompra {
+  id: number;
+  id_compra: number;
+  id_proveedor: number; 
+  id_empleado: number; 
+  id_producto: number; 
+  cantidad: number;
+  precio: number;
+  total: number;
+  referencia: string;
+}
+

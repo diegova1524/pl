@@ -22,9 +22,15 @@ const links = [
       exact: true,
     },
     {
-      label: "Productos",
-      icon: "i-heroicons-bell",
-      to: "/compras/productos",
+      label: "Detalles de Compra",
+      icon: "i-heroicons-clipboard-check",
+      to: "/compras/detalles-de-compra",
+      exact: true,
+    },
+    {
+      label: "Graficos de Compras",
+      icon: "i-heroicons-clipboard-check",
+      to: "/compras/grafico-compras",
       exact: true,
     },
   ],
